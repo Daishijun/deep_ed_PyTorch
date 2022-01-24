@@ -144,7 +144,7 @@ class MessageOneRound(nn.Module):
     def __init__(self, args):
         super(MessageOneRound, self).__init__()
         self.args = args
-        self.dummy_param = nn.Parameter(torch.empty(0))
+        self.dummy_param = nn.Parameter(torch.empty(0)).cuda()
 
         '''
         self.mask = torch.ones(self.args.num_mentions, self.args.max_num_cand, self.args.num_mentions)
