@@ -144,7 +144,7 @@ class MessageOneRound(nn.Module):
     def __init__(self, args):
         super(MessageOneRound, self).__init__()
         self.args = args
-        self.dummy_param = nn.Parameter(torch.empty(0)).cuda()
+        self.dummy_param = nn.Parameter(torch.empty(0))
 
         '''
         self.mask = torch.ones(self.args.num_mentions, self.args.max_num_cand, self.args.num_mentions)
@@ -243,6 +243,8 @@ class ModelGlobal(nn.Module):
         self.linear1 = nn.Linear(2, self.args.nn_pem_interm_size)
         self.linear2 = nn.Linear(self.args.nn_pem_interm_size, 1)
         self.message_pass_list = [copy.deepcopy(MessageOneRound(args)) for _ in range(self.args.lbp_iter)]
+        for mp in self.message_pass_list:
+            mp.cuda()
 
     def forward(self, inputs):
         entity_context_sim_scores, beta = self.entity_context(inputs)
