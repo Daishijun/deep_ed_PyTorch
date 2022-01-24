@@ -217,6 +217,8 @@ class MessageOneRound(nn.Module):
         device = self.dummy_param.device
         mask = mask.to(device)
 
+        ## debug diff device
+        print("[DEBUG] select_crf_new_message device: {}\t mask device: {}".format(select_crf_new_message.device, mask.device))
         select_crf_new_message = select_crf_new_message * mask
         '''
         assert select_crf_new_message.shape == torch.Size(
